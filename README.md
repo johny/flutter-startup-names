@@ -1,6 +1,9 @@
 # Flutter app: Names Generator
 
 A simple Flutter project for generating random names.
+
+![Screenshot](screenshot.png)
+
 Based on codelabs tutorial:
 
 - [Write Your First Flutter App, part 1](https://codelabs.developers.google.com/codelabs/first-flutter-app-pt1)
