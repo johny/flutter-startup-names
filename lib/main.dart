@@ -59,8 +59,6 @@ class RandomWordsState extends State<RandomWords> {
           return Divider();
         }
 
-        print('List index: $i');
-
         final int index = i ~/ 2;
         if (index >= _words.length) {
           _words.addAll(generateWordPairs().take(10));
