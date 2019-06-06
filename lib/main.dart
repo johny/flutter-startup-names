@@ -24,6 +24,32 @@ class RandomWordsState extends State<RandomWords> {
 
   final TextStyle _biggerFont = const TextStyle(fontSize: 18);
 
+  void _pushSavedView() {
+    Navigator.of(context).push(
+      MaterialPageRoute<void>(builder: (BuildContext context) {
+
+        final Iterable<ListTile> savedTiles = _saved.map(
+          (WordPair pair) {
+            return ListTile(
+              title: Text(pair.asPascalCase, style: _biggerFont),
+            );
+          }
+        );
+
+        final List<Widget> dividedList = ListTile.divideTiles(
+          context: context,
+          tiles: savedTiles
+        ).toList();
+
+        return Scaffold(
+          appBar: AppBar(title: Text('Saved Words')),
+          body: ListView(children: dividedList)
+        );
+
+      })
+    );
+  }
+
   Widget _buildList() {
     return ListView.builder(
       padding: const EdgeInsets.all(16),
@@ -32,6 +58,8 @@ class RandomWordsState extends State<RandomWords> {
         if (i.isOdd) {
           return Divider();
         }
+
+        print('List index: $i');
 
         final int index = i ~/ 2;
         if (index >= _words.length) {
@@ -57,7 +85,7 @@ class RandomWordsState extends State<RandomWords> {
       ),
       onTap: () {
         setState(() {
-          isSaved ? _saved.remove(pair) : _saved.add(pair)
+          isSaved ? _saved.remove(pair) : _saved.add(pair);
         });
       },
     );
@@ -66,7 +94,12 @@ class RandomWordsState extends State<RandomWords> {
   @override
   Widget build(BuildContext context) {
     return Scaffold (
-      appBar: AppBar(title: Text('Names Generator')),
+      appBar: AppBar(
+        title: Text('Names Generator'),
+        actions: <Widget>[
+          IconButton(icon: Icon(Icons.list), onPressed: _pushSavedView),
+        ]
+      ),
       body: _buildList()
     );
   }
